@@ -4,7 +4,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const strengthBar = document.getElementById("strength-bar");
     const togglePassword = document.getElementById("toggle-password");
     const generatePasswordBtn = document.getElementById("generate-password");
-    
+    const darkModeCheckbox = document.getElementById("dark-mode-checkbox");
+    const body = document.body;
+
+    // Load Dark Mode Preference
+    if (localStorage.getItem("darkMode") === "enabled") {
+        body.classList.add("dark-mode");
+        darkModeCheckbox.checked = true;
+    }
+
+    darkModeCheckbox.addEventListener("change", () => {
+        body.classList.toggle("dark-mode");
+        
+        if (body.classList.contains("dark-mode")) {
+            localStorage.setItem("darkMode", "enabled");
+        } else {
+            localStorage.setItem("darkMode", "disabled");
+        }
+    });
+
     const requirements = {
         length: document.getElementById("length"),
         lowercase: document.getElementById("lowercase"),
@@ -30,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateRequirement(requirements.lowercase, /[a-z]/.test(password), "At least one lowercase letter");
         updateRequirement(requirements.uppercase, /[A-Z]/.test(password), "At least one uppercase letter");
         updateRequirement(requirements.number, /\d/.test(password), "At least one number");
-        updateRequirement(requirements.special, /[!@#$%^&*()_+?><:{}\[\]\-]/.test(password), "At least one special character");
+        updateRequirement(requirements.special, /[!@#$%^&*(),.?":{}\[\]\-]/.test(password), "At least one special character");
         
         score = Object.values(requirements).filter(el => el.classList.contains("valid")).length;
         updateStrength(score, password);
@@ -51,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const lower = "abcdefghijklmnopqrstuvwxyz";
         const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const numbers = "0123456789";
-        const specials = "!@#$%^&*()_+?><:{}[]-";
+        const specials = "!@#$%^&*()_+?><:{}[]";
         
         let password = "";
         password += lower[Math.floor(Math.random() * lower.length)];
@@ -65,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         // Ensure at least one special character is included
-        if (!/[!@#$%^&*()_+?><:{}\[\]\-]/.test(password)) {
+        if (!/[!@#$%^&*()_+?><:{}\[\]]/.test(password)) {
             const randomIndex = Math.floor(Math.random() * password.length);
             password = password.substring(0, randomIndex) + specials[Math.floor(Math.random() * specials.length)] + password.substring(randomIndex + 1);
         }
