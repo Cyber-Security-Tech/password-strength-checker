@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #f9f9f9;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,7 +55,7 @@ input {
 #strength-bar {
     height: 100%;
     width: 0;
-    transition: width 0.3s;
+    transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
 }
 
 #password-requirements {
@@ -69,5 +69,10 @@ input {
     font-size: 14px;
     margin: 5px 0;
     color: red;
-    transition: color 0.3s;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#password-requirements li.valid {
+    opacity: 1;
+    font-weight: bold;
 }
