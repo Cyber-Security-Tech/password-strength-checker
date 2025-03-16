@@ -117,3 +117,12 @@ input {
 .strong {
     background-color: green;
 }
+
+/* Fix Eye Icon Cursor */
+.eye-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer; /* Ensures it's clickable with a pointer cursor */
+}

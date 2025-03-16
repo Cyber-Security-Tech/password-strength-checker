@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateRequirement(requirements.lowercase, /[a-z]/.test(password), "At least one lowercase letter");
         updateRequirement(requirements.uppercase, /[A-Z]/.test(password), "At least one uppercase letter");
         updateRequirement(requirements.number, /\d/.test(password), "At least one number");
-        updateRequirement(requirements.special, /[!@#$%^&*(),.?":{}\[\]\-]/.test(password), "At least one special character");
+        updateRequirement(requirements.special, /[!@#$%^&*\-_+=?]/.test(password), "At least one special character");
         
         score = Object.values(requirements).filter(el => el.classList.contains("valid")).length;
         updateStrength(score, password);
@@ -79,27 +79,26 @@ document.addEventListener("DOMContentLoaded", () => {
         const lower = "abcdefghijklmnopqrstuvwxyz";
         const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const numbers = "0123456789";
-        const specials = "!@#$%^&*()_+?><:{}[]";
+        const specials = "!@#$%^&*\-_+=?"; // Only commonly allowed special characters
         
-        let password = "";
-        password += lower[Math.floor(Math.random() * lower.length)];
-        password += upper[Math.floor(Math.random() * upper.length)];
-        password += numbers[Math.floor(Math.random() * numbers.length)];
-        password += specials[Math.floor(Math.random() * specials.length)];
+        let passwordArray = [];
+        passwordArray.push(lower[Math.floor(Math.random() * lower.length)]);
+        passwordArray.push(upper[Math.floor(Math.random() * upper.length)]);
+        passwordArray.push(numbers[Math.floor(Math.random() * numbers.length)]);
+        passwordArray.push(specials[Math.floor(Math.random() * specials.length)]);
         
         const allChars = lower + upper + numbers + specials;
-        while (password.length < 12) {
-            password += allChars[Math.floor(Math.random() * allChars.length)];
+        while (passwordArray.length < 12) {
+            passwordArray.push(allChars[Math.floor(Math.random() * allChars.length)]);
         }
         
-        // Ensure at least one special character is included
-        if (!/[!@#$%^&*()_+?><:{}\[\]]/.test(password)) {
-            const randomIndex = Math.floor(Math.random() * password.length);
-            password = password.substring(0, randomIndex) + specials[Math.floor(Math.random() * specials.length)] + password.substring(randomIndex + 1);
+        // Shuffle password array to randomize character positions
+        for (let i = passwordArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [passwordArray[i], passwordArray[j]] = [passwordArray[j], passwordArray[i]];
         }
-
-        password = password.split('').sort(() => Math.random() - 0.5).join(''); // Shuffle password
         
+        const password = passwordArray.join('');
         passwordInput.value = password;
         checkStrength(password);
     };
