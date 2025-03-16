@@ -4,16 +4,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const strengthBar = document.getElementById("strength-bar");
     const togglePassword = document.getElementById("toggle-password");
     const generatePasswordBtn = document.getElementById("generate-password");
-    const darkModeCheckbox = document.getElementById("dark-mode-checkbox");
+    const darkModeToggle = document.getElementById("dark-mode-toggle");
     const body = document.body;
 
     // Load Dark Mode Preference
     if (localStorage.getItem("darkMode") === "enabled") {
         body.classList.add("dark-mode");
-        darkModeCheckbox.checked = true;
+        darkModeToggle.checked = true;
     }
 
-    darkModeCheckbox.addEventListener("change", () => {
+    darkModeToggle.addEventListener("change", () => {
         body.classList.toggle("dark-mode");
         
         if (body.classList.contains("dark-mode")) {
@@ -51,10 +51,10 @@ document.addEventListener("DOMContentLoaded", () => {
         updateRequirement(requirements.special, /[!@#$%^&*\-_+=?]/.test(password), "At least one special character");
         
         score = Object.values(requirements).filter(el => el.classList.contains("valid")).length;
-        updateStrength(score, password);
+        updateStrength(score);
     };
 
-    const updateStrength = (score, password) => {
+    const updateStrength = (score) => {
         let strength;
         strengthBar.classList.remove("weak", "medium", "strong");
 
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const lower = "abcdefghijklmnopqrstuvwxyz";
         const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const numbers = "0123456789";
-        const specials = "!@#$%^&*\-_+=?"; // Only commonly allowed special characters
+        const specials = "!@#$%^&*\-_+=?"; 
         
         let passwordArray = [];
         passwordArray.push(lower[Math.floor(Math.random() * lower.length)]);
@@ -92,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
             passwordArray.push(allChars[Math.floor(Math.random() * allChars.length)]);
         }
         
-        // Shuffle password array to randomize character positions
         for (let i = passwordArray.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [passwordArray[i], passwordArray[j]] = [passwordArray[j], passwordArray[i]];
