@@ -44,12 +44,6 @@ input:focus {
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
 }
 
-input::-ms-reveal,
-input::-webkit-contacts-auto-fill-button,
-input::-webkit-password-toggle-button {
-    display: none;
-}
-
 .eye-icon {
     position: absolute;
     right: 15px;
@@ -94,8 +88,24 @@ input::-webkit-password-toggle-button {
 #password-requirements li.valid {
     opacity: 1;
     font-weight: bold;
+    color: green;
     transform: translateX(10px);
 }
 
+/* Button Styling */
+#generate-password {
+    margin-top: 15px;
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
 
-
+#generate-password:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}

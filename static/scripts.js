@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const strengthLabel = document.getElementById("strength-label").querySelector("span");
     const strengthBar = document.getElementById("strength-bar");
     const togglePassword = document.getElementById("toggle-password");
+    const generatePasswordBtn = document.getElementById("generate-password");
     
     const requirements = {
         length: document.getElementById("length"),
@@ -11,90 +12,68 @@ document.addEventListener("DOMContentLoaded", () => {
         number: document.getElementById("number"),
         special: document.getElementById("special")
     };
-    
+
     const checkStrength = (password) => {
         let score = 0;
-        if (password.length >= 8) {
-            score++;
-            requirements.length.innerHTML = "✅ At least 8 characters";
-            requirements.length.style.color = "green";
-        } else {
-            requirements.length.innerHTML = "❌ At least 8 characters";
-            requirements.length.style.color = "red";
+        
+        function updateRequirement(el, condition, text) {
+            if (condition) {
+                el.innerHTML = `✅ ${text}`;
+                el.classList.add("valid");
+            } else {
+                el.innerHTML = `❌ ${text}`;
+                el.classList.remove("valid");
+            }
         }
-
-        if (/[a-z]/.test(password)) {
-            score++;
-            requirements.lowercase.innerHTML = "✅ At least one lowercase letter";
-            requirements.lowercase.style.color = "green";
-        } else {
-            requirements.lowercase.innerHTML = "❌ At least one lowercase letter";
-            requirements.lowercase.style.color = "red";
-        }
-
-        if (/[A-Z]/.test(password)) {
-            score++;
-            requirements.uppercase.innerHTML = "✅ At least one uppercase letter";
-            requirements.uppercase.style.color = "green";
-        } else {
-            requirements.uppercase.innerHTML = "❌ At least one uppercase letter";
-            requirements.uppercase.style.color = "red";
-        }
-
-        if (/\d/.test(password)) {
-            score++;
-            requirements.number.innerHTML = "✅ At least one number";
-            requirements.number.style.color = "green";
-        } else {
-            requirements.number.innerHTML = "❌ At least one number";
-            requirements.number.style.color = "red";
-        }
-
-        if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-            score++;
-            requirements.special.innerHTML = "✅ At least one special character";
-            requirements.special.style.color = "green";
-        } else {
-            requirements.special.innerHTML = "❌ At least one special character";
-            requirements.special.style.color = "red";
-        }
-
+        
+        updateRequirement(requirements.length, password.length >= 8, "At least 8 characters");
+        updateRequirement(requirements.lowercase, /[a-z]/.test(password), "At least one lowercase letter");
+        updateRequirement(requirements.uppercase, /[A-Z]/.test(password), "At least one uppercase letter");
+        updateRequirement(requirements.number, /\d/.test(password), "At least one number");
+        updateRequirement(requirements.special, /[!@#$%^&*()_+?><:{}\[\]\-]/.test(password), "At least one special character");
+        
+        score = Object.values(requirements).filter(el => el.classList.contains("valid")).length;
         updateStrength(score, password);
     };
 
     const updateStrength = (score, password) => {
         let strength;
+        const strengthColors = ["red", "orange", "yellow", "lightblue", "green"];
+        const strengthTexts = ["Very Weak", "Weak", "Medium", "Fairly Strong", "Very Strong"];
         
-        if (score === 1) {
-            strength = "Very Weak";
-            strengthBar.style.width = "20%";
-            strengthBar.style.backgroundColor = "red";
-        } else if (score === 2) {
-            strength = "Weak";
-            strengthBar.style.width = "40%";
-            strengthBar.style.backgroundColor = "orange";
-        } else if (score === 3) {
-            strength = "Medium";
-            strengthBar.style.width = "60%";
-            strengthBar.style.backgroundColor = "yellow";
-        } else if (score === 4) {
-            // Adjusted logic: If missing either a number or special character, it remains Medium
-            if (!/\d/.test(password) || !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-                strength = "Medium";
-                strengthBar.style.width = "60%";
-                strengthBar.style.backgroundColor = "yellow";
-            } else {
-                strength = "Fairly Strong";
-                strengthBar.style.width = "80%";
-                strengthBar.style.backgroundColor = "lightblue";
-            }
-        } else {
-            strength = "Very Strong";
-            strengthBar.style.width = "100%";
-            strengthBar.style.backgroundColor = "green";
+        strength = strengthTexts[score - 1] || "Very Weak";
+        strengthBar.style.width = `${(score / 5) * 100}%`;
+        strengthBar.style.backgroundColor = strengthColors[score - 1] || "red";
+        strengthLabel.innerText = strength;
+    };
+
+    const generatePassword = () => {
+        const lower = "abcdefghijklmnopqrstuvwxyz";
+        const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const numbers = "0123456789";
+        const specials = "!@#$%^&*()_+?><:{}[]-";
+        
+        let password = "";
+        password += lower[Math.floor(Math.random() * lower.length)];
+        password += upper[Math.floor(Math.random() * upper.length)];
+        password += numbers[Math.floor(Math.random() * numbers.length)];
+        password += specials[Math.floor(Math.random() * specials.length)];
+        
+        const allChars = lower + upper + numbers + specials;
+        while (password.length < 12) {
+            password += allChars[Math.floor(Math.random() * allChars.length)];
+        }
+        
+        // Ensure at least one special character is included
+        if (!/[!@#$%^&*()_+?><:{}\[\]\-]/.test(password)) {
+            const randomIndex = Math.floor(Math.random() * password.length);
+            password = password.substring(0, randomIndex) + specials[Math.floor(Math.random() * specials.length)] + password.substring(randomIndex + 1);
         }
 
-        strengthLabel.innerText = strength;
+        password = password.split('').sort(() => Math.random() - 0.5).join(''); // Shuffle password
+        
+        passwordInput.value = password;
+        checkStrength(password);
     };
 
     passwordInput.addEventListener("input", (e) => {
@@ -104,4 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
     togglePassword.addEventListener("click", () => {
         passwordInput.type = passwordInput.type === "password" ? "text" : "password";
     });
+
+    generatePasswordBtn.addEventListener("click", generatePassword);
 });
