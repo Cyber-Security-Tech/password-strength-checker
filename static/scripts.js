@@ -56,12 +56,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const updateStrength = (score, password) => {
         let strength;
-        const strengthColors = ["red", "orange", "yellow", "lightblue", "green"];
-        const strengthTexts = ["Very Weak", "Weak", "Medium", "Fairly Strong", "Very Strong"];
-        
-        strength = strengthTexts[score - 1] || "Very Weak";
-        strengthBar.style.width = `${(score / 5) * 100}%`;
-        strengthBar.style.backgroundColor = strengthColors[score - 1] || "red";
+        strengthBar.classList.remove("weak", "medium", "strong");
+
+        if (score <= 2) {
+            strength = "Weak";
+            strengthBar.style.width = "33%";
+            strengthBar.classList.add("weak");
+        } else if (score === 3 || score === 4) {
+            strength = "Medium";
+            strengthBar.style.width = "66%";
+            strengthBar.classList.add("medium");
+        } else {
+            strength = "Strong";
+            strengthBar.style.width = "100%";
+            strengthBar.classList.add("strong");
+        }
+
         strengthLabel.innerText = strength;
     };
 
