@@ -1,4 +1,4 @@
-/* styles.css - Fixed Spacing Above & Below Input Field */
+/* styles.css - Fully Mobile Optimized with ALL Features Retained */
 
 body {
     font-family: Arial, sans-serif;
@@ -12,6 +12,7 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Responsive Container */
 .container {
     background: white;
     padding: 20px;
@@ -19,6 +20,7 @@ body {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 350px;
+    max-width: 90%; /* Adjusts width for small screens */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -33,13 +35,14 @@ label[for="password"] {
     margin-bottom: 10px;
 }
 
+/* Input Box & Icons */
 .password-container {
     position: relative;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px; /* Increased spacing below input field */
+    margin-bottom: 20px; /* Space below input */
 }
 
 input {
@@ -79,7 +82,7 @@ input {
     background-color: #007BFF;
     color: white;
     border: none;
-    padding: 5px 7px;
+    padding: 6px 9px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 12px;
@@ -123,7 +126,7 @@ input {
 /* Fix Eye Icon Position */
 .eye-icon {
     position: absolute;
-    right: 60px; /* Proper positioning */
+    right: 50px; /* Proper positioning */
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
@@ -155,7 +158,7 @@ input {
 
 /* Generate Password Button - Added Spacing */
 #generate-password {
-    margin-top: 15px; /* Extra spacing above the button */
+    margin-top: 15px; /* Extra spacing */
 }
 
 /* Dark Mode Toggle Switch - Fixed */
@@ -210,4 +213,32 @@ input:checked + .slider {
 
 input:checked + .slider:before {
     transform: translateX(26px);
+}
+
+/* RESPONSIVE STYLES - Optimized for Mobile */
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+        max-width: 95%; /* Slightly wider for small phones */
+    }
+
+    input {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .eye-icon {
+        right: 45px; /* Adjust for smaller screens */
+        font-size: 16px;
+    }
+
+    .copy-btn {
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px;
+    }
 }
