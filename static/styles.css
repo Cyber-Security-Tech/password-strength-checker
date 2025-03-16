@@ -1,3 +1,5 @@
+/* styles.css - Fixed Spacing Above & Below Input Field */
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -25,21 +27,27 @@ h1, label {
     transition: color 0.3s ease;
 }
 
+/* Added space below "Enter Password" label */
+label[for="password"] {
+    display: block;
+    margin-bottom: 10px;
+}
+
 .password-container {
     position: relative;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    margin-bottom: 20px; /* Increased spacing below input field */
 }
 
 input {
-    width: 90%;
+    width: 80%;
     padding: 12px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    text-align: left;
     background-color: white;
     color: black;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -66,7 +74,91 @@ input {
     border: 1px solid #888;
 }
 
-/* Dark Mode Toggle Switch */
+/* Copy Button - Small & Next to Eye */
+.copy-btn {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 5px 7px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: 5px;
+    transition: background-color 0.3s;
+}
+
+.copy-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Password Strength Bar - Smooth Animation */
+#password-strength-bar {
+    width: 100%;
+    height: 10px;
+    background: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+#strength-bar {
+    height: 100%;
+    width: 0;
+    transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
+}
+
+/* Strength Levels */
+.weak {
+    background-color: red;
+}
+
+.medium {
+    background-color: orange;
+}
+
+.strong {
+    background-color: green;
+}
+
+/* Fix Eye Icon Position */
+.eye-icon {
+    position: absolute;
+    right: 60px; /* Proper positioning */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* Fix Password Requirements Alignment */
+#password-requirements {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+#password-requirements li {
+    font-size: 14px;
+    margin: 5px 0;
+    color: red;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+#password-requirements li.valid {
+    opacity: 1;
+    font-weight: bold;
+    color: green;
+    transform: translateX(10px);
+}
+
+/* Generate Password Button - Added Spacing */
+#generate-password {
+    margin-top: 15px; /* Extra spacing above the button */
+}
+
+/* Dark Mode Toggle Switch - Fixed */
 .dark-mode-toggle {
     display: flex;
     align-items: center;
@@ -118,65 +210,4 @@ input:checked + .slider {
 
 input:checked + .slider:before {
     transform: translateX(26px);
-}
-
-/* Password Strength Bar - Smooth Animation */
-#password-strength-bar {
-    width: 100%;
-    height: 10px;
-    background: #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 10px;
-}
-
-#strength-bar {
-    height: 100%;
-    width: 0;
-    transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
-}
-
-/* Strength Levels */
-.weak {
-    background-color: red;
-}
-
-.medium {
-    background-color: orange;
-}
-
-.strong {
-    background-color: green;
-}
-
-/* Align Password Requirements to the Left */
-#password-requirements {
-    list-style: none;
-    padding: 0;
-    text-align: left;
-    margin-top: 15px;
-    margin-left: 10px;
-}
-
-#password-requirements li {
-    font-size: 14px;
-    margin: 5px 0;
-    color: red;
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-#password-requirements li.valid {
-    opacity: 1;
-    font-weight: bold;
-    color: green;
-    transform: translateX(10px);
-}
-
-/* Fix Cursor for Eye Icon */
-.eye-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
 }
