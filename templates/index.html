@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Checker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='scripts.js') }}" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Password Strength Checker</h1>
+
+        <form id="password-form">
+            <label for="password">Enter Password:</label>
+            <div style="position: relative;">
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit">Check</button>
+        </form>
+
+        <div id="password-result">
+            <!-- Password result (strength, issues) will be displayed here -->
+        </div>
+    </div>
+</body>
+</html>
